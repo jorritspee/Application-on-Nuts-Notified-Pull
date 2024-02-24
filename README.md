@@ -26,13 +26,49 @@ E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nut
   TTA FHIR - Authentication & Authorization specifies the generic functions 'authentication' & 'authorization'. The abovementioned TTA FHIR - Notified pull refers to this specification.  TA-Notified-Pull-on-Nuts replaces TTA FHIR - Authentication & Authorization for a specfication that is aligned with the Nuts-specifications.
 - *Twiin Technical Agreement FHIR - Addressing* (abbreviated as TTA FHIR - Addressing): https://twiin-afsprakenstelsel.scrollhelp.site/ta12/10-2-8-tta-addressing
   TTA FHIR - Addressing specifies the generic functions 'addressing'. The abovementioned TTA FHIR - Notified pull refers to this specification.  TA-Notified-Pull-on-Nuts replaces TTA FHIR - Addressing for a specfication that is aligned with the Nuts-specifications.
- 
-- *Nuts-use-case-profile "bgz-referral"*
+- *Nuts-use-case-profile "bgz-referral"*: https://github.com/jorritspee/nuts-use-case-profile-bgz-referral/blob/main/README.md
   The Nuts-use-case-profile "bgz-referral" describes how to use the specification 'TA-Notified-Pull-on-Nuts' in the context of a medical specialist referral (commonly reffered to in Dutch as a BgZ-verwijzing).
+- *HL7 FHIR Workflow Management Communication Pattern F*: https://www.hl7.org/fhir/workflow-management.html#optionf
+  HL7 has described a FHIR workflow management communication pattern in which a Task-resource is created on the placer's system. TA Notified Pull on Nuts complies to this pattern and provides an implementation guide for the digital interactions between actor Placer and actor Filler.
 
 ## 1.3 Key differences with TTA FHIR - Notified pull
 - All references to TTA FHIR - Authentication & Authorization have to be ignored and replaced by the information provided in this document
 - All references to TTA FHIR - Addressing have to be ignored and replaced by the information provided in this document
 - In TTA FHIR - Notified pull the presence of the "Workflow Task" is optional. In TA Notified Pull on Nuts the presence of the "Workflow Task" is mandatory.
 
+## 1.4 Glossary
+- Placer: The professional that has a request. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
+- Filler: The professional that is request to perform an action. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
+- Nuts: A partnership of parties in healthcare to create a broadly supported, open, decentralized infrastructure for the exchange of data in healthcare and the medical domain. See www.nuts.nl.
+- Application on Nuts — A practical application of the Nuts philosophy and open technology to enable a tangible use case in healthcare (formerly called "Bolt").
+- Data holder / Placer organization: The healthcare institution from which the patient is referred. From the perspective of the BgZ referral, the organization that has patient data that needs to be transferred.
+- Pacer system: The software system that manages the data holder's data.
+- Patient: The patient that is subject of the request
+- Data user / Filler organization: The healthcare institution that receives the request, and therefore has an information need for data from the data holder.
+- Filler System — The software system that manages the recipient organization's data.
+- Legal base — A legal base for being allowed to break the professional secrecy of the data holder.
+
+# 2. Proces description
+## 2.1 Exchange of workflow information
+The generic process of exchanging workflow information is described in paragraph "[steps](https://www.hl7.org/fhir/workflow-management.html#12.12.1.1)" of HL7's Workflow Management Communication Patterns option F. Following
+
+## 2.2 Exchange of medical record data
+The filler may need medical record data stored at the filler to perform the request.
+
+# 3. Architecture
+The paragraphs below provide an architectural solution for the process described in the previous chapter. We use the Nuts manifesto as a guideline.
+
+## 3.1 Notified pull
+This Application on Nuts uses the notified pull exchange pattern. This means that data is not actively sent to the data user (push) and that the data user system does not randomly retrieve data (pull). Instead, the data holder system sends a notification to the data user system that specific data is ready to be retrieved. Only in response to that notification does the data user system retrieve the necessary data.
+
+The advantage of this approach over push is that the data user system only needs to retrieve data when the data user organization actually needs this data. In this way, the requirement for data minimization can be better met. It is also easier for the data holder to determine that the person retrieving data is the correct person, and to comply with the NEN 7513 and GDPR obligation to log which person has viewed the data. Compare a personal e-mail inbox where you log in to retrieve your e-mail with a fax machine in the department that anyone who walks by can access.
+
+The advantage of a notified-pull mechanism over just a pull mechanism is timing and simplicity of security. If the data user system does not receive a notification, it must pull periodically to see whether new data is waiting at the data holder. Analogous to constantly reloading a web page. This causes a lot of unnecessary extra network traffic and delays in receiving messages. The data holder system must also compare the request with a complex rights structure with each pull to discover whether the recipient is allowed to retrieve the requested data.
+
+The concept of notified pull is therefore the most effective and efficient way to support all requested functionality, guarantee privacy and apply auditing correctly. It prevents unnecessary copying of data between systems and the data holder retains full control over who gets access to data.
+
+The notification can be used by the data user organization to immediately notify a user or initiate other processes. The notification must be as “thin” as possible and not contain any personal and/or medical data, in order to be useful at different stages of the process and because of the legal framework that we will describe in the next paragraph.
+
+## 3.2 Legislation
+to do. is there something generic to say here? or is it only use case specific? I think it would be nice to say something about WGBO being applicable.
 
