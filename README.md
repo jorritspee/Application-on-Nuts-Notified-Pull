@@ -38,11 +38,11 @@ E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nut
 
 ## 1.4 Glossary
 - Placer: The professional that has a request. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
-- Filler: The professional that is request to perform an action. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
+- Filler: The professional that is requested to perform an action. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
 - Nuts: A partnership of parties in healthcare to create a broadly supported, open, decentralized infrastructure for the exchange of data in healthcare and the medical domain. See www.nuts.nl.
 - Application on Nuts — A practical application of the Nuts philosophy and open technology to enable a tangible use case in healthcare (formerly called "Bolt").
 - Data holder / Placer organization: The healthcare institution from which the patient is referred. From the perspective of the BgZ referral, the organization that has patient data that needs to be transferred.
-- Pacer system: The software system that manages the data holder's data.
+- Placer system: The software system that manages the data holder's data.
 - Patient: The patient that is subject of the request
 - Data user / Filler organization: The healthcare institution that receives the request, and therefore has an information need for data from the data holder.
 - Filler System — The software system that manages the recipient organization's data.
@@ -70,5 +70,26 @@ The concept of notified pull is therefore the most effective and efficient way t
 The notification can be used by the data user organization to immediately notify a user or initiate other processes. The notification must be as “thin” as possible and not contain any personal and/or medical data, in order to be useful at different stages of the process and because of the legal framework that we will describe in the next paragraph.
 
 ## 3.2 Legislation
-to do. is there something generic to say here? or is it only use case specific? I think it would be nice to say something about WGBO being applicable.
+The applicable legal texts can change per use case but in general these are:
+- the WGBO (medical treatment agreement law);
+- the Wabvpz (supplementary provisions on the processing of personal data in healthcare);
+- the GDPR (General Data Protection Regulation) and the UAVG;
+- Wegiz (Electronic Data Exchange in Healthcare Act).
+The WDO is not relevant to this application as it governs patient identification. In the context of the BgZ referral, we only deal with identifying healthcare practitioners and healthcare organizations.
+
+The GDPR (Article 9(1) of the GDPR and Article 22(1) of the UAVG) stats that personal data and special (medical) personal data may not simply be processed. This concerns both the placer (data holder) and the filler (data user). The GDPR lists 6 grounds for processing:
+1. consent of the person concerned (patient)
+2. execution of an agreement
+3. legal obligation
+4. vital interests of the person concerned (patient)
+5. performing a public law task
+6. legitimate interest of the organization
+The placer (data holder) is subject to legal obligation, which is included in the WGBO. Things are a little less simple for the filler (data user).
+If there is agreement as to who will be the filler or filler organization, and the patient has already given consent for the request from placer to filler, the WGBO applies.
+The WGBO states that a care provider may assume a patient's consent (implicit consent) to provide his or her patient data when that care provider sends the patient to another care provider for a current care need and provides patient data for this purpose (more details can be found in the report "[Implementatie van de WGBO Deel 4](https://www.knmg.nl/download/implementatie-van-de-wgbo-deel-4-toegang-tot-patientengegevens#:~:text=wet%20naar%20praktijk.-,Implementatie%20van%20de%20WGBO.,king%20met%20het%20NICTIZ%20ontwikkeld.)", chapter chapter 2.2.5.
+
+## 3.3 Security and trust
+to do
+
+
 
