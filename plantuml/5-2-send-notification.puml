@@ -1,0 +1,31 @@
+@startuml
+autonumber
+skinparam ParticipantPadding 30
+skinparam BoxPadding 20
+
+Box Sender
+  actor Alice
+  participant "Sender System" as Sender
+  participant SenderNode
+end box
+Box Receiver
+  participant ReceiverNode
+  participant "Receiving System" as Receiver
+  actor Bob
+end box
+
+group "Notify"
+  Sender -> SenderNode: Find Task notify endpoint (receiver id)
+  SenderNode --> Sender: <<Endpoint>>
+  Sender -> SenderNode: Request accessToken (no params because public endpoint)
+  SenderNode -> ReceiverNode: Request accessToken <<jwt-grant>>
+  ReceiverNode --> SenderNode: <<accessToken incl id sender>>
+  SenderNode --> Sender: <<accessToken incl id sender>>
+  Sender -> Receiver: Notify (POST Notification-task)
+  Receiver -> ReceiverNode: Validate <<accessToken>>
+  ReceiverNode --> Receiver: Ok
+  Receiver --> Sender: Ok
+  deactivate Sender
+end
+
+@enduml
