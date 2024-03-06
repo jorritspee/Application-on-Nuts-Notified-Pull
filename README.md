@@ -5,9 +5,9 @@ The mission of the Nuts community is to provide the healthcare sector with a pub
 In the pioneering phase of the Nuts community, the Nuts and Bolts metaphor was used to describe the generic Nuts specification (then “Nuts”) and the specific applications (then “Bolts”). The term “Bolt” has been replaced by “Application on Nuts”. This term clarifies the separation between the specific applications and the generic trust layer and emphasizes the resulting scalability.
 
 An 'application on Nuts' is a specific application that uses the generic Nuts-specification and for which parties have agreed additional public requirements and specifications.
-The application on Nuts "TA Notified Pull on Nuts" sets out these additional requirements and specifications for the Twiin (functional) exchange pattern 'Notified Pull' ([elaboration in Dutch by Twiin](https://twiin-afsprakenstelsel.scrollhelp.site/ta12/10-1-4-uitwisselpatroon-notified-pull-versturen-no)) and the Twiin 'Technical Agreement FHIR Notified Pull' ([TTA FHIR - Notified pull](https://twiin-afsprakenstelsel.scrollhelp.site/ta12/10-2-3-tta-fhir-notified-pull)).
+The application on Nuts "Notified Pull" sets out these additional requirements and specifications for the Twiin (functional) exchange pattern 'Notified Pull' ([elaboration in Dutch by Twiin](https://twiin-afsprakenstelsel.scrollhelp.site/ta12/10-1-4-uitwisselpatroon-notified-pull-versturen-no)) and the Twiin 'Technical Agreement FHIR Notified Pull' ([TTA FHIR - Notified pull](https://twiin-afsprakenstelsel.scrollhelp.site/ta12/10-2-3-tta-fhir-notified-pull)).
 
-The application on Nuts "TA Notified Pull on Nuts" has been prepared by the collaborating software suppliers in the Nuts community. It clearly specifies how the Twiin 'Technical Agreement FHIR Notified Pull' will take place in terms of process and technology, using the Nuts specification and other open standards.
+The application on Nuts "Notified Pull" has been prepared by the collaborating software suppliers in the Nuts community. It clearly specifies how the Twiin 'Technical Agreement FHIR Notified Pull' will take place in terms of process and technology, using the Nuts specification and other open standards.
 
 This document is primarily intended for software suppliers who are starting an implementation process. This document provides them with the necessary insights. In addition, this document aims to be readable for healthcare organizations involved, so that it becomes clear whether the process described here meets their wishes.
 
@@ -17,7 +17,7 @@ We hope you enjoy reading it, and if this document raises any questions, we woul
 
 ## 1.1 Use cases
 
-The application on Nuts "TA Notified Pull on Nuts" is generic in nature and offers support for multiple use cases. Examples of supported use cases are medical specialist referral (BgZ-referral), medication prescription and other cross-organizational workflow requests. Applying the application on Nuts "TA Notified Pull on Nuts" to a specific use case takes place on the basis of a use-case-profile. The use-case-profile is documented separately and describes, among other things, the governance, the information standards, the permitted authentication means, the permitted legal bases and the access policy of the use case. 
+The application on Nuts "Notified Pull" is generic in nature and offers support for multiple use cases. Examples of supported use cases are medical specialist referral (BgZ-referral), medication prescription and other cross-organizational workflow requests. Applying the application on Nuts "Notified Pull" to a specific use case takes place on the basis of a use-case-profile. The use-case-profile is documented separately and describes, among other things, the governance, the information standards, the permitted authentication means, the permitted legal bases and the access policy of the use case. 
 
 E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nuts-use-case-profile-bgz-referral/blob/main/README.md)" describes how to use this specification in the context of a medical specialist referral (commonly reffered to in Dutch as a BgZ-verwijzing).
 
@@ -32,7 +32,7 @@ E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nut
 - *Nuts-use-case-profile "bgz-referral"*: https://github.com/jorritspee/nuts-use-case-profile-bgz-referral/blob/main/README.md
   The Nuts-use-case-profile "bgz-referral" describes how to use the specification 'TA-Notified-Pull-on-Nuts' in the context of a medical specialist referral (commonly reffered to in Dutch as a BgZ-verwijzing).
 - *HL7 FHIR Workflow Management Communication Pattern F*: https://www.hl7.org/fhir/workflow-management.html#optionf
-  HL7 has described a FHIR workflow management communication pattern in which a Task-resource is created on the placer's system. TA Notified Pull on Nuts complies to this pattern and provides an implementation guide for the digital interactions between actor Placer and actor Filler.
+  HL7 has described a FHIR workflow management communication pattern in which a Task-resource is created on the placer's system. The applucation on Nuts Notified Pull complies to this pattern and provides an implementation guide for the digital interactions between actor Placer and actor Filler.
 - *Application-on-Nuts Zorginzage 2022*: https://nuts-foundation.gitbook.io/bolts/zorginzage/zorginzage-2022
   This application-on-Nuts specifies how to implement cross organzational medical data requests. It describes the "pull" part of "notified pull".
 
