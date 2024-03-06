@@ -262,14 +262,19 @@ As described in §3.4, we separate the process tracking on the one hand from the
 
 # 5 Implementation
 
-## 5.1 Notification
+## 5.1 Register autheorizations
 
-## 5.2 Retrieve Workflow-task
 
-## 5.3 Retrieve medical record data
+## 5.2 Send notification
+
+## 5.3 Retrieve Workflow-task
+
+## 5.4 Retrieve medical record data
 refer to chapter 4.9 of Zorginzage 2022 (https://nuts-foundation.gitbook.io/bolts/zorginzage/zorginzage-2022#id-4.9-sequenties).
 
-## 5.4 Update Workflow-task
+## 5.5 Update Workflow-task
+
+
 
 # 6 Access Policy
 The access policy is described in the use case profile. Chapter 5 of Zorginzage 2022 (https://nuts-foundation.gitbook.io/bolts/zorginzage/zorginzage-2022#id-5.-access-policy) describes the minimum requrements of an access policy.
