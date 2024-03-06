@@ -1,0 +1,26 @@
+@startuml
+autonumber
+skinparam ParticipantPadding 30
+skinparam BoxPadding 20
+
+Box Sender
+  actor Alice
+  participant "Sender System" as Sender
+  participant SenderNode
+end box
+Box Receiver
+  participant ReceiverNode
+  participant "Receiving System" as Receiver
+  actor Bob
+end box
+
+Alice --> Sender: start
+activate Sender
+group "authorization registration"
+  Sender -> SenderNode: Register Workflow-Task authorization record \n(sender id, receiver id, bsn)
+  Sender -> SenderNode: Register Medical data authorization record(s) \n(sender id, receiver id, bsn)
+  SenderNode --> Sender: Ok
+  SenderNode -> ReceiverNode: sync authorizations
+end
+
+@enduml
