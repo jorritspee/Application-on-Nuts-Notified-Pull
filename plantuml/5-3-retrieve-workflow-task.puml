@@ -1,0 +1,34 @@
+@startuml
+autonumber
+skinparam ParticipantPadding 30
+skinparam BoxPadding 20
+
+Box Sender
+  actor Alice
+  participant "Sender System" as Sender
+  participant SenderNode
+end box
+Box Receiver
+  participant ReceiverNode
+  participant "Receiving System" as Receiver
+  actor Bob
+end box
+
+group "Retrieve Workflow Task"
+  group "Endpoint authorization"
+    Receiver -> ReceiverNode: Find FHIR endpoint (sender id)
+    activate Receiver
+    ReceiverNode --> Receiver: <<Endpoint>>
+    Receiver -> ReceiverNode: Request accessToken (authz record)
+    ReceiverNode -> SenderNode: Request AccessToken <<jwt-grant>>
+    SenderNode --> ReceiverNode: <<accessToken>>
+    ReceiverNode --> Receiver: <<accessToken>>
+  end
+  Receiver -> Sender: GET Workflow-Task <<accessToken>>
+  Sender -> SenderNode: Validate <<accessToken>>
+  SenderNode --> Sender: Ok
+  Sender --> Receiver: <<workflow task>>
+  Receiver -> Bob: Notify enduser
+  deactivate Receiver
+end
+@enduml
