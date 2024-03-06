@@ -1,0 +1,39 @@
+@startuml
+autonumber
+skinparam ParticipantPadding 30
+skinparam BoxPadding 20
+
+Box Sender
+  actor Alice
+  participant "Sender System" as Sender
+  participant SenderNode
+end box
+Box Receiver
+  participant ReceiverNode
+  participant "Receiving System" as Receiver
+  actor Bob
+end box
+
+group "Update Workflow task"
+  Bob --> Receiver: complete
+  activate Receiver
+  group "Endpoint authorization"
+    Receiver <-> SenderNode: see 5.3
+  end
+  Receiver -> Sender: update Workflow Task <<accessToken>>
+  activate Sender
+  Sender -> SenderNode: validate
+  SenderNode --> Sender: <<authorized resources>>
+  Sender -> Sender: Task in authorized resources?
+  Sender -> Sender: update Task
+  Sender --> Receiver: Ok
+  deactivate Receiver
+  Sender -> SenderNode: revoke authorization to medical data \n(according to use case access policy)
+  SenderNode --> Sender: Ok
+  SenderNode -> ReceiverNode: sync authorizations
+  group "Notify"
+    Sender -> Receiver: see 5.2
+  end
+  deactivate Sender
+end
+@enduml
