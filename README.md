@@ -156,11 +156,28 @@ These specific agreements are recorded per healthcare use case in the use case p
 The correct filler system must be notified, so that the filler organization knows that a workflow request is made to the organization. The purpose of the notification is to notify the filler organization that workflow data is available. It is also necessary to be able to monitor the progress of the workflow process. Every workflow must therefore have a status: is the workflow being processed, has it been cancelled, is it ready?
 
 ### 4.1.1 Workflow Task
-The [Workflow-Task resource](https://www.hl7.org/fhir/task.html) is used to track worfklow progress. The placer (data holder) is responsible for setting out the Workflow-task. If the data holder wants to send a workflow request to a filler organization, a workflow task must be created for this. Because of this responsibility and because of the principle of data at the source, the Workflow task will be stored in the data holder system (placer system). The filler system (data user system) is notified and can retrieve the Workflow task. For every change in the Workflow task, the data holder system will send a notification. In the application-on-Nuts Notified Pull 
+The [Workflow-Task resource](https://www.hl7.org/fhir/task.html) is used to track the progress of the worfklow. The placer (data holder) is responsible for setting out the Workflow-task. If the data holder wants to send a workflow request to a filler organization, a workflow task must be created for this. Because of this responsibility and because of the principle of data at the source, the Workflow task will be stored in the data holder system (placer system). The filler system (data user system) is notified and can retrieve the Workflow task. For every change in the Workflow task, the data holder system will send a notification. 
 
-TTA FHIR - Notified pull does not describe the elements of the generic workflow task. In the technical design for the nursing handover, the Workflow Task resource is specified in §3.4. For the sake of reusability, this Application to Nuts uses the latter Workflow-Task specification as a basis. In each use case profile the exact contents of the Worfklow-Task for that use case are specified.
+TTA FHIR - Notified pull does not describe the elements of the generic workflow task. In the technical design for the nursing handover, the Workflow Task resource is specified in §3.4. For the sake of reusability, this Application to Nuts uses the latter Workflow-Task specification as a generic basis. 
 
 In terms of data, the Workflow task can contain references to the various (FHIR-)resources relevant to the execution of the Workflow-task.
+
+The application on Nuts Notified Pull uses the following generic specifications. In each use case profile the exact contents of the Worfklow-Task for that use case are specified.
+
+| Attribute                        | Card.           | Description                                                                                                                                         |
+|----------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| intent                           | 1..1 (unchanged)| Fixed value: "order" (unchanged)                                                                                                                    |
+| owner.identifier                 | 1..1 (unchanged)| did of filler organization   ??DID or FHIR-ref??                                                                                                    |
+| for                              | 1..1 (unchanged)| Reference to FHIR Patient-resource. It is not allowed to include a BSN (or other information that can de linked to an individual) in the workflow-Task when it is accessed without a personal authentication contract|
+| status                           | 1..1 (unchanged)| Fixed value: "requested" (unchanged)                                                                                                                |
+| identifier                       | 1..1 (unchanged)| uuid/logical id of the Workflow-Task, Tip: Fill with groupIdentifier-field of the Notification Task with the same value                             |
+| code.coding                      | 1..1 (unchanged)| The use case profile MUST specify the correct (SNOMED-)code(s) to use heren(unchanged)                                                              |    
+| restriction.period               | 0..1 (unchanged)| This period information should be aligned to validity of the issued Nuts Authorization Credentials. Period information in NutsAuthzCred is leading. |
+| requester.agent.identifier       | 1..1 (unchanged)| did of vendor of placer organization                                                                                                                |
+| requester.onBehalfOf.identifier  | 1..1 (unchanged)| did of placer organization                                                                                                                          |
+| owner.identifier                 | 1..1 (unchanged)| did of filler organization                                                                                                                          |
+| input                            | 0..0            | a list of references to and/or search-queries for resources containing the Patient's personal information that is releveant for handling the workfow-Task. The use case profile MUST specify the allowed read- and search-requests|
+| input:authorization-base         | 0..1 (unchanged)| did of NutsAuthorizationCredential for access to personal FHIR-resources (i.e. the Patient resource in the for-element and all resources in the input-element|
 
 ### 4.1.2 Organization endpoint discovery
 
@@ -251,7 +268,7 @@ When a Workflow task is added, the placer system will send a notification to the
 | requester.agent.identifier       | 1..1 (unchanged)| did:nuts:<<placer organization>>/serviceEndpoint?type=fhir                                                                                          |
 | requester.onBehalfOf.identifier  | 1..1 (unchanged)| did:nuts of placer organization                                                                                                                     |
 | owner.identifier                 | 1..1 (unchanged)| did:nuts of filler organization                                                                                                                     |
-| input:authorization-base         | 0..1 (unchanged)| did:nuts of NutsAuthorizationCredential                                                                                                             |
+| input:authorization-base         | 0..1 (unchanged)| did:nuts of NutsAuthorizationCredential for access to Workflow-Task (that is referenced in the basedOn-element)                                     |
 | input:get-workflow-task          | 1..1            | true                                                                                                                                                |
 | input: read-available-resource   | 0..0            |                                                                                                                                                     |
 | input: query-available-resources | 0..0            |                                                                                                                                                     |
