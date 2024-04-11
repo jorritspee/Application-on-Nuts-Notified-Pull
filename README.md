@@ -49,11 +49,11 @@ E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nut
 - Filler: The professional that is requested to perform an action. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
 - Nuts: A partnership of parties in healthcare to create a broadly supported, open, decentralized infrastructure for the exchange of data in healthcare and the medical domain. See www.nuts.nl.
 - Application on Nuts — A practical application of the Nuts philosophy and open technology to enable a tangible use case in healthcare (formerly called "Bolt").
-- Data holder / Placer organization: The healthcare institution from which the patient is referred. From the perspective of the BgZ referral, the organization that has patient data that needs to be transferred.
-- Placer system: The software system that manages the data holder's data.
+- Data holder / Sending Organization: The healthcare institution from which the patient is referred. From the perspective of the BgZ referral, the organization that has patient data that needs to be transferred.
+- Sending System: The software system that manages the data holder's data.
 - Patient: The patient that is subject of the request
-- Data user / Filler organization: The healthcare institution that receives the request, and therefore has an information need for data from the data holder.
-- Filler System — The software system that manages the recipient organization's data.
+- Data user / Receiving Organization: The healthcare institution that receives the request, and therefore has an information need for data from the data holder.
+- Receiving System — The software system that manages the recipient organization's data.
 - Legal base — A legal base for being allowed to break the professional secrecy of the data holder.
 
 # 2. Proces description
@@ -99,17 +99,17 @@ The GDPR (Article 9(1) of the GDPR and Article 22(1) of the UAVG) stats that per
 5. performing a public law task
 6. legitimate interest of the organization
 The placer (data holder) is subject to legal obligation, which is included in the WGBO. Things are a little less simple for the filler (data user).
-If there is agreement as to who will be the filler or filler organization, and the patient has already given consent for the request from placer to filler, the WGBO applies.
+If there is agreement as to who will be the filler or Receiving Organization, and the patient has already given consent for the request from placer to filler, the WGBO applies.
 The WGBO states that a care provider may assume a patient's consent (implicit consent) to provide his or her patient data when that care provider sends the patient to another care provider for a current care need and provides patient data for this purpose (more details can be found in the report "[Implementatie van de WGBO Deel 4](https://www.knmg.nl/download/implementatie-van-de-wgbo-deel-4-toegang-tot-patientengegevens#:~:text=wet%20naar%20praktijk.-,Implementatie%20van%20de%20WGBO.,king%20met%20het%20NICTIZ%20ontwikkeld.)", chapter chapter 2.2.5.
 
 ## 3.3 Security and trust
 
-In the notified pull scenario, the filler organization (data user) retrieves data from the data holder. Upon receiving a request the data holder, as data controller, must ensure that the requesting organization (data user) is indeed allowed to access the data.
+In the notified pull scenario, the Receiving Organization (data user) retrieves data from the data holder. Upon receiving a request the data holder, as data controller, must ensure that the requesting organization (data user) is indeed allowed to access the data.
 
-In addition to the requesting organization, the request also involves a specific user and the customer system. It is the filler system that, technically speaking, retrieves the data and shows it to the user. It is the user who actually gets access to the data. To prevent unauthorized persons from retrieving and viewing the data, the placer system must be able to check the following:
-1. Which filler system connects
-2. That the filler system acts as a processor for the data user organization
-3. On behalf of which natural person the filler system connects
+In addition to the requesting organization, the request also involves a specific user and the customer system. It is the Receiving System that, technically speaking, retrieves the data and shows it to the user. It is the user who actually gets access to the data. To prevent unauthorized persons from retrieving and viewing the data, the Sending System must be able to check the following:
+1. Which Receiving System connects
+2. That the Receiving System acts as a processor for the data user organization
+3. On behalf of which natural person the Receiving System connects
 4. That this person represents the data user organization
 Assuming that there is a need for a solution that is as open as possible, where each party is given equal opportunities in the market and where security is of a very high level, the use of cryptographic proofs is necessary. Each of the above checks must be able to be performed using a cryptographic signature. After all, any solution that would use an active trusted third party for these controls would allow that party to influence or “lock down” the market, and would constitute a security hotspot and single point of failure in the design. [RFC002 §7](https://nuts-foundation.gitbook.io/drafts/rfc/rfc002-authentication-token#7.-supported-means) specifies which means should be accepted for personal authentication. Resources necessary for the authentication of organizations are still under development.
 
@@ -153,10 +153,10 @@ These specific agreements are recorded per healthcare use case in the use case p
 
 ## 4.1 Process tracking
 
-The correct filler system must be notified, so that the filler organization knows that a workflow request is made to the organization. The purpose of the notification is to notify the filler organization that workflow data is available. It is also necessary to be able to monitor the progress of the workflow process. Every workflow must therefore have a status: is the workflow being processed, has it been cancelled, is it ready?
+The correct Receiving System must be notified, so that the Receiving Organization knows that a workflow request is made to the organization. The purpose of the notification is to notify the Receiving Organization that workflow data is available. It is also necessary to be able to monitor the progress of the workflow process. Every workflow must therefore have a status: is the workflow being processed, has it been cancelled, is it ready?
 
 ### 4.1.1 Workflow Task
-The [Workflow-Task resource](https://www.hl7.org/fhir/task.html) is used to track the progress of the worfklow. The placer (data holder) is responsible for setting out the Workflow-task. If the data holder wants to send a workflow request to a filler organization, a workflow task must be created for this. Because of this responsibility and because of the principle of data at the source, the Workflow task will be stored in the data holder system (placer system). The filler system (data user system) is notified and can retrieve the Workflow task. For every change in the Workflow task, the data holder system will send a notification. 
+The [Workflow-Task resource](https://www.hl7.org/fhir/task.html) is used to track the progress of the worfklow. The placer (data holder) is responsible for setting out the Workflow-task. If the data holder wants to send a workflow request to a Receiving Organization, a workflow task must be created for this. Because of this responsibility and because of the principle of data at the source, the Workflow task will be stored in the data holder system (Sending System). The Receiving System (data user system) is notified and can retrieve the Workflow task. For every change in the Workflow task, the data holder system will send a notification. 
 
 TTA FHIR - Notified pull does not describe the elements of the generic workflow task. In the technical design for the nursing handover, the Workflow Task resource is specified in §3.4. For the sake of reusability, this Application to Nuts uses the latter Workflow-Task specification as a generic basis. 
 
@@ -167,31 +167,33 @@ The application on Nuts Notified Pull uses the following generic specifications.
 | Attribute                        | Card.           | Description                                                                                                                                         |
 |----------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | intent                           | 1..1 (unchanged)| Fixed value: "order" (unchanged)                                                                                                                    |
-| owner.identifier                 | 1..1 (unchanged)| did of filler organization   ??DID or FHIR-ref??                                                                                                    |
-| for                              | 1..1 (unchanged)| Reference to FHIR Patient-resource. It is not allowed to include a BSN (or other information that can de linked to an individual) in the workflow-Task when it is accessed without a personal authentication contract|
+| owner.identifier                 | 1..1 (unchanged)| did of Receiving Organization   ??DID or FHIR-ref??                                                                                                    |
+| for                              | 1..1 (unchanged)| Reference to FHIR Patient-resource. It is not allowed to include a BSN (or other information that can be linked to an individual) in the workflow-Task when it is accessed without a personal authentication contract|
 | status                           | 1..1 (unchanged)| Fixed value: "requested" (unchanged)                                                                                                                |
 | identifier                       | 1..1 (unchanged)| uuid/logical id of the Workflow-Task, Tip: Fill with groupIdentifier-field of the Notification Task with the same value                             |
 | code.coding                      | 1..1 (unchanged)| The use case profile MUST specify the correct (SNOMED-)code(s) to use heren(unchanged)                                                              |    
-| restriction.period               | 0..1 (unchanged)| This period information should be aligned to validity of the issued Nuts Authorization Credentials. Period information in NutsAuthzCred is leading. |
-| requester.agent.identifier       | 1..1 (unchanged)| did of vendor of placer organization                                                                                                                |
-| requester.onBehalfOf.identifier  | 1..1 (unchanged)| did of placer organization                                                                                                                          |
-| owner.identifier                 | 1..1 (unchanged)| did of filler organization                                                                                                                          |
+| restriction.period               | 0..1 (unchanged)| This period information should be aligned to validity of the issued Nuts Authorization Credentials. Period information in NutsAuthzCred (based on expiration date) is leading. |
+| requester.agent.identifier       | 1..1 (unchanged)| <did of Sending Organization>/serviceEndpoint?type=fhir          |
+| requester.onBehalfOf.identifier  | 1..1 (unchanged)| did of Sending Organization                                                                                                                          |
+| owner.identifier                 | 1..1 (unchanged)| did of Receiving organization                                                                                                                          |
 | input                            | 0..0            | a list of references to and/or search-queries for resources containing the Patient's personal information that is releveant for handling the workfow-Task. The use case profile MUST specify the allowed read- and search-requests|
-| input:authorization-base         | 0..1 (unchanged)| did of NutsAuthorizationCredential for access to personal FHIR-resources (i.e. the Patient resource in the for-element and all resources in the input-element|
+| input:authorization-base         | 0..1 (unchanged)| did of NutsAuthorizationCredential for access to personal FHIR-resources (i.e. the Patient resource in the for-element and all resources in the input-element. Please note: Notified Pull makes use of two NutsAuthorizationCredentials: one for authorizing access to personal FHIR-resources and one for authorizing access to the Workflow Task-resource. Constraints (e.g. system and code) follow Twiin TA Notified Pull|
 
 ### 4.1.2 Organization endpoint discovery
 
-The placer is responsible for notifying the correct filler organization. When selecting that filler organization, a number of challenges arise:
-1. Does the intended filler organization have a filler system that supports the workflow request/ worfklow use case?
-2. What is the technical address of this filler system?
-3. Can the filler system be trusted? In other words: is the supplier of the filler system actually a processor of the filler organization?
+The Sending Organization is responsible for notifying the correct Receiving Organization. When selecting that Receiving Organization, a number of challenges arise:
+1. Does the intended Receiving Organization have a Receiving System that supports the workflow request/ worfklow use case?
+2. What is the technical address of this Receiving System?
+3. Can the Receiving System be trusted? In other words: is the supplier of the Receiving System actually a processor of the Receiving Organization?
 
-The Nuts register according to [RFC006](https://nuts-foundation.gitbook.io/drafts/rfc/rfc006-distributed-registry) of the Nuts specification is used to find the filler organization. To support the workflow use case, both the placer organization and the filler organization must register a service in the register.
+The Nuts register according to [RFC006](https://nuts-foundation.gitbook.io/drafts/rfc/rfc006-distributed-registry) of the Nuts specification is used to find the Receiving Organization. To support the workflow use case, both the Sending Organization and the Receiving Organization must register a service in the register.
 
 Services can be registered per supplier and/or per organization according to the [service specification](https://nuts-foundation.gitbook.io/drafts/rfc/rfc006-distributed-registry#4.-services)https://nuts-foundation.gitbook.io/drafts/rfc/rfc006-distributed-registry#4.-services. 
 
-#### 4.1.2.1 Placer organization
-A placer service must be registered for the placer organization:
+Please use the compoundService.serviceEndpoint.keys to query endpoint url’s
+
+#### 4.1.2.1 Sending Organization
+A service must be registered for the Sending Organization:
 
 ```json
 {
@@ -199,7 +201,7 @@ A placer service must be registered for the placer organization:
   "type": "<<use case specific placer service name>>", 
   "serviceEndpoint": {
     "oauth": "did:nuts:vendor_identifier/serviceEndpoint?type=production-oauth",
-    "fhir": "did:nuts:vendor_identifier/serviceEndpoint?type=<<use case specific placer service name>>-fhir"
+    "fhir": "did:nuts:vendor_identifier/serviceEndpoint?type=<<use case specific Sending Organization service name>>-fhir"
   }
 }
 ```
@@ -220,9 +222,9 @@ The value for 'type' is specified in the use case profile. The 'serviceEndpoint'
 }
 ```
 
-#### 4.1.2.2 Filler organization
+#### 4.1.2.2 Receiving Organization
 
-A filler service must be registered for the filler organization:
+A filler service must be registered for the Receiving Organization:
 
 ```json
 {
@@ -250,11 +252,11 @@ With endpoints:
 }
 ```
 
-This <<use case specific filler service name>>-notify endpoint should be the basepath on which notifications can be received regarding the Workflow-Task resource. The notification endpoint URL should not be registered with a / at the end. The next section describes the notification mechanism. This is therefore a notification that a new (or changed) Workflow-Task resource is ready at the placer organization. 
+This <<use case specific filler service name>>-notify endpoint should be the basepath on which notifications can be received regarding the Workflow-Task resource. The notification endpoint URL should not be registered with a / at the end. The next section describes the notification mechanism. This is therefore a notification that a new (or changed) Workflow-Task resource is ready at the Sending Organization. 
 
 ### 4.1.3 Notification protocol
 
-When a Workflow task is added, the placer system will send a notification to the previously registered endpoint of the filler system. This notification is structured using a FHIR Task-resource (in short: "Notification-Task") in accordance with the below specs. The application on Nuts reuses the [specification of the Notfication-Task](https://vzvz.atlassian.net/wiki/spaces/Twiincon/pages/331847512/10.3.1+Twiin-01+Send+Notification+Task#Request-message) that is part of TTA FHIR Notified Pull, with the following changes:
+When a Workflow task is added, the Sending System will send a notification to the previously registered endpoint of the Receiving System. This notification is structured using a FHIR Task-resource (in short: "Notification-Task") in accordance with the below specs. The application on Nuts reuses the [specification of the Notfication-Task](https://vzvz.atlassian.net/wiki/spaces/Twiincon/pages/331847512/10.3.1+Twiin-01+Send+Notification+Task#Request-message) that is part of TTA FHIR Notified Pull, with the following changes:
 
 | Attribute                        | Card.           | Description                                                                                                                                         |
 |----------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -264,12 +266,12 @@ When a Workflow task is added, the placer system will send a notification to the
 | status                           | 1..1 (unchanged)| Fixed value: "requested" (unchanged)                                                                                                                |
 | intent                           | 1..1 (unchanged)| Fixed value: "proposal" (unchanged)                                                                                                                 |
 | code.coding                      | 1..1 (unchanged)| (unchanged)                                                                                                                                         |    
-| restriction.period               | 0..1 (unchanged)| This period information should be aligned to validity of the issued Nuts Authorization Credentials. Period information in NutsAuthzCred is leading. |
-| requester.agent.identifier       | 1..1 (unchanged)| did:nuts:<<placer organization>>/serviceEndpoint?type=fhir                                                                                          |
-| requester.onBehalfOf.identifier  | 1..1 (unchanged)| did:nuts of placer organization                                                                                                                     |
-| owner.identifier                 | 1..1 (unchanged)| did:nuts of filler organization                                                                                                                     |
-| input:authorization-base         | 0..1 (unchanged)| did:nuts of NutsAuthorizationCredential for access to Workflow-Task (that is referenced in the basedOn-element)                                     |
-| input:get-workflow-task          | 1..1            | true                                                                                                                                                |
+| restriction.period               | 0..1 (unchanged)| This period information should be aligned to validity of the issued Nuts Authorization Credentials. Period information in NutsAuthzCred (based on expiration date) is leading. |
+| requester.agent.identifier       | 1..1 (unchanged)| <did of Sending Organization>/serviceEndpoint?type=fhir                                                                                            |
+| requester.onBehalfOf.identifier  | 1..1 (unchanged)| <did of Sending Organization>             |
+| owner.identifier                 | 1..1 (unchanged)| <did of Receiving Organization>                                                                                                                     |
+| input:authorization-base         | 0..1 (unchanged)| did:nuts of NutsAuthorizationCredential for access to Workflow-Task (that is referenced in the basedOn-element). Please note: Notified Pull makes use of two NutsAuthorizationCredentials: one for authorizing access to personal FHIR-resources and one for authorizing access to the Workflow Task-resource. Constraints (e.g. system and code) follow Twiin TA Notified Pull|                                     |
+| input:get-workflow-task          | 1..1            | Fixed value: true. Constraints (e.g. system and code) follow Twiin TA Notified Pull       |
 | input: read-available-resource   | 0..0            |                                                                                                                                                     |
 | input: query-available-resources | 0..0            |                                                                                                                                                     |
 
