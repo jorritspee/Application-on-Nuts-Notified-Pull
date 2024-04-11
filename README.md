@@ -62,7 +62,7 @@ The generic process of exchanging workflow information is described in paragraph
 
 ## 2.2 Exchange of medical record data
 
-The Receiving Organization may need medical record data stored at the filler to perform the request.
+The Receiving Organization may need medical record data stored at the Sending Organization to perform the request.
 
 # 3. Architecture
 
@@ -96,8 +96,8 @@ The GDPR (Article 9(1) of the GDPR and Article 22(1) of the UAVG) stats that per
 4. vital interests of the person concerned (patient)
 5. performing a public law task
 6. legitimate interest of the organization
-The Sending Organization is subject to legal obligation, which is included in the WGBO. Things are a little less simple for the filler (data user).
-If there is agreement as to who will be the filler or Receiving Organization, and the patient has already given consent for the request from Sending Organization to filler, the WGBO applies.
+The Sending Organization is subject to legal obligation, which is included in the WGBO. Things are a little less simple for the Receiving Organization.
+If there is agreement as to who will be the Receiving Organization, and the patient has already given consent for the request from Sending Organization to Receiving Organization, the WGBO applies.
 The WGBO states that a care provider may assume a patient's consent (implicit consent) to provide his or her patient data when that care provider sends the patient to another care provider for a current care need and provides patient data for this purpose (more details can be found in the report "[Implementatie van de WGBO Deel 4](https://www.knmg.nl/download/implementatie-van-de-wgbo-deel-4-toegang-tot-patientengegevens#:~:text=wet%20naar%20praktijk.-,Implementatie%20van%20de%20WGBO.,king%20met%20het%20NICTIZ%20ontwikkeld.)", chapter chapter 2.2.5.
 
 ## 3.3 Security and trust
@@ -177,6 +177,8 @@ The application on Nuts Notified Pull uses the following generic specifications.
 | input                            | 0..0            | a list of references to and/or search-queries for resources containing the Patient's personal information that is releveant for handling the workfow-Task. The use case profile MUST specify the allowed read- and search-requests|
 | input:authorization-base         | 0..1 (unchanged)| did of NutsAuthorizationCredential for access to personal FHIR-resources (i.e. the Patient resource in the for-element and all resources in the input-element. Please note: Notified Pull makes use of two NutsAuthorizationCredentials: one for authorizing access to personal FHIR-resources and one for authorizing access to the Workflow Task-resource. Constraints (e.g. system and code) follow Twiin TA Notified Pull|
 
+An informative template for the Workflow Task can be found here: https://github.com/jorritspee/Application-on-Nuts-Notified-Pull/blob/main/Workflow-Task-Template.json.
+
 ### 4.1.2 Organization endpoint discovery
 
 The Sending Organization is responsible for notifying the correct Receiving Organization. When selecting that Receiving Organization, a number of challenges arise:
@@ -222,15 +224,15 @@ The value for 'type' is specified in the use case profile. The 'serviceEndpoint'
 
 #### 4.1.2.2 Receiving Organization
 
-A filler service must be registered for the Receiving Organization:
+A service must be registered for the Receiving Organization:
 
 ```json
 {
     "id": "did:nuts:organization_identifier#abc",
-    "type": "<<use case specific filler service name>>", 
+    "type": "<<use case specific Receiving Organization service name>>", 
     "serviceEndpoint": {
         "oauth": "did:nuts:vendor_identifier/serviceEndpoint?type=production-oauth",
-        "notification": "did:nuts:vendor_identifier/serviceEndpoint?type=<<use case specific filler service name>>-notify"
+        "notification": "did:nuts:vendor_identifier/serviceEndpoint?type=<<use case specific Receiving Organization service name>>-notify"
     }
 }
 ```
@@ -239,7 +241,7 @@ With endpoints:
 ```json
 {
     "id": "did:nuts:vendor_identifier#abc",
-    "type": "<<use case specific filler service name>>-notify",
+    "type": "<<use case specific Receiving Organization service name>>-notify",
     "serviceEndpoint": "https://notify.example.com/specific/path"
 }
 
@@ -250,7 +252,7 @@ With endpoints:
 }
 ```
 
-This <<use case specific filler service name>>-notify endpoint should be the basepath on which notifications can be received regarding the Workflow-Task resource. The notification endpoint URL should not be registered with a / at the end. The next section describes the notification mechanism. This is therefore a notification that a new (or changed) Workflow-Task resource is ready at the Sending Organization. 
+This <<use case specific Receiving Organization service name>>-notify endpoint should be the basepath on which notifications can be received regarding the Workflow-Task resource. The notification endpoint URL should not be registered with a / at the end. The next section describes the notification mechanism. This is therefore a notification that a new (or changed) Workflow-Task resource is ready at the Sending Organization. 
 
 ### 4.1.3 Notification protocol
 
@@ -272,6 +274,9 @@ When a Workflow task is added, the Sending System will send a notification to th
 | input:get-workflow-task          | 1..1            | Fixed value: true. Constraints (e.g. system and code) follow Twiin TA Notified Pull       |
 | input: read-available-resource   | 0..0            |                                                                                                                                                     |
 | input: query-available-resources | 0..0            |                                                                                                                                                     |
+
+An informative template for the Notification Task can be found here: https://github.com/jorritspee/Application-on-Nuts-Notified-Pull/blob/main/Notification-Task-Template.json.
+
 
 ## 4.2 Data exchange
 
