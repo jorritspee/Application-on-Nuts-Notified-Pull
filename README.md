@@ -13,7 +13,7 @@ This document is primarily intended for software suppliers who are starting an i
 
 This document is not complete. It is currently a living document to reach working agreements and technical solutions between suppliers. So some things will change in the coming months. In addition, this document is also an index: in many places it will refer to existing standards and other documentation. In this way we keep this document concise and readable, and we can also reuse the documentation we refer to for other Applications on Nuts.
 
-We hope you enjoy reading it, and if this document raises any questions, we would be happy to [answer](https://nuts.nl/contact/)https://nuts.nl/contact/ them.
+We hope you enjoy reading it, and if this document raises any questions, we would be happy to [answer](https://nuts.nl/contact/) them.
 
 ## 1.1 Use cases
 
@@ -32,7 +32,7 @@ E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nut
 - *Nuts-use-case-profile "bgz-referral"*: https://github.com/jorritspee/nuts-use-case-profile-bgz-referral/blob/main/README.md
   The Nuts-use-case-profile "bgz-referral" describes how to use the specification 'TA-Notified-Pull-on-Nuts' in the context of a medical specialist referral (commonly reffered to in Dutch as a BgZ-verwijzing).
 - *HL7 FHIR Workflow Management Communication Pattern F*: https://www.hl7.org/fhir/workflow-management.html#optionf
-  HL7 has described a FHIR workflow management communication pattern in which a Task-resource is created on the placer's system. The application on Nuts Notified Pull complies to this pattern and provides an implementation guide for the digital interactions between actor Placer and actor Filler. The actor Placer corresponds to "Sending Organization". The actor Filler corrspeonds to "Receiving Organization".
+  HL7 has described a FHIR workflow management communication pattern in which a Task-resource is created on the placer's system. The application on Nuts Notified Pull complies to this pattern and provides an implementation guide for the digital interactions between actor Placer and actor Filler. The actor Placer corresponds to "Sending Organization". The actor Filler corresponds to "Receiving Organization".
 - *Application-on-Nuts Zorginzage 2022*: https://nuts-foundation.gitbook.io/bolts/zorginzage/zorginzage-2022
   This application-on-Nuts specifies how to implement cross organzational medical data requests. It describes the "pull" part of "notified pull".
 
@@ -285,7 +285,7 @@ As described in §3.4, we separate the process tracking on the one hand from the
 ## 4.3 BSN availability
 This paragrah describes the availability of bsn's in the sequence that is used in this Application on Nuts. It is a summary of information that is already present in other parts of this specification and is therfore informal.
 |artefact|bsn availability|reference to authorization credential|
----------------------------------------------------------------------
+|--------|----------------|-------------------------------------|
 | notification task| no bsn| authorization credential that authorizes access to workflow task: "workflow task authorization credential"|
 | workflow task authorization credential|no bsn|n/a|
 | workflow task|no bsn| authorization credential that authorizes that authorizes access to personal resources: "bgz authorization credential"|
