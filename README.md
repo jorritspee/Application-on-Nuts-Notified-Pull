@@ -171,7 +171,7 @@ The application on Nuts Notified Pull uses the following generic specifications.
 | identifier                       | 1..1 (unchanged)| uuid/logical id of the Workflow-Task, Tip: Fill with groupIdentifier-field of the Notification Task with the same value                             |
 | code.coding                      | 1..1 (unchanged)| The use case profile MUST specify the correct (SNOMED-)code(s) to use heren(unchanged)                                                              |    
 | restriction.period               | 0..1 (unchanged)| This period information should be aligned to validity of the issued Nuts Authorization Credentials. Period information in NutsAuthzCred (based on expiration date) is leading. |
-| requester.agent.identifier       | 1..1 (unchanged)| <did of Sending Organization>/serviceEndpoint?type=fhir          |
+| requester.agent.identifier       | 1..1 (unchanged)| \<did of Sending Organization\>/serviceEndpoint?type=fhir          |
 | requester.onBehalfOf.identifier  | 1..1 (unchanged)| did of Sending Organization                                                                                                                          |
 | owner.identifier                 | 1..1 (unchanged)| did of Receiving organization                                                                                                                          |
 | input                            | 0..0            | a list of references to and/or search-queries for resources containing the Patient's personal information that is releveant for handling the workfow-Task. The use case profile MUST specify the allowed read- and search-requests|
@@ -295,6 +295,8 @@ This paragrah describes the availability of bsn's in the sequence that is used i
 
 ## 5.1 Register authorizations
 ![Register authorizations](https://www.plantuml.com/plantuml/png/RL8zRzmm3DtrAnvkQeShWWHT3WSt3T0r3PeKNRhm92OLR8k6FgvnVtqbE2SxXXT18X_VUwHu6oBvcFfEKOhYKdzYhq9htK2UUZpafDLs81SVo1ZhNd1pjSZVoUibVdsbL7xYaPt9703fA1vVEwivluQP2Ri9WySnHEvte31NBN5Jy5uCgtp3ILwB0dwmPdjUeskuuDU2KwxOd3LhGVLw9wSgf5wyf06xduEXoFWbldtkv2yYXNQdKB3OxvjASe2MVkWuyaHdpxbiAV76zysPGQoBe1J_YBV_A5fnXH4LZMCcdfi_833ZywUR3Cf1jG1Mt05fPVGf6yNnI5fp24_IickQfRKwyUc2bUIPEbi85HPXx6V1p7rfWGqy1qa-IpND1kLXScCTjag-R5JKVafXpQyc_hra36zDUxifpsTf-Vte4GKz6wkfGrOa_7OVI6lnPQjBCWM6fdnCeyGWdTNZn-t1L5kBNFLSltDq-hs9C2_8lKJxF4uBKRke19TTkAwxO7ZzfIL-cu_KT_y1)
+
+Informative suggestion: Add a delay of 10 seconds between registering the authorizations and sending the notification to counter the race condition.
 
 ## 5.2 Send notification
 ![Send notification](https://www.plantuml.com/plantuml/png/ZL5DZzem4BtxLunoWaCarDvG556azWW8KEyJUugcIUniRBFmxzTAl5cJ_T1UeioyZ_T6tbY7lVDj8z0xetrRKIzipRh37biu190bTwZT0PLYVO6VgmJVcjlh_iTAY332YRGA7W0edUdXLyEImjIzEK4sSk1qjuxQ3D1EgfGNbpkZI8G_gCnjI3YI9BxEsN4T-RF04GiraymeIBfkJJK5YKjlV0VPpZZ-Tyy29vREowJN6lvm49pHrg079WIiCnn25ttq1rPB0OaAyiba3KNnEohAyjEK8prviWvGIhBsR6hIiD06XbUmK954RmawNpKifmhpr3AU_9LhKVn_TlcbnzWdLK3-M2kGKobhsG0hi0CZkMQc_ROkRRo6yILWSTYVpkF04XqRdJkqzJBf-lxIlzYmGaUFoHyTc2RkwmHF3eY88fIEhy4sxaNuYatu-BPv0G00)
