@@ -1,3 +1,8 @@
+# Colofon
+
+|Version|1.00|
+|Authors|Christian Spruijt (SDB Groep), Jorrit Spee (Tenzinger, Santeon)|
+
 # 1. Introduction
 
 The mission of the Nuts community is to provide the healthcare sector with a public utility (in Dutch: "Nutsvoorziening") to improve information sharing in healthcare and support optimal collaboration. This public utility consists of open specifications and an open-source software reference implementation in the form of a Nuts-node. Because the function of the Nuts-network formed by the Nuts-nodes is limited to the realization of a generic trust layer, it is suitable for many different applications.
