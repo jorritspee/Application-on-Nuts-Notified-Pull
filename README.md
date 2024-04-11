@@ -32,7 +32,7 @@ E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nut
 - *Nuts-use-case-profile "bgz-referral"*: https://github.com/jorritspee/nuts-use-case-profile-bgz-referral/blob/main/README.md
   The Nuts-use-case-profile "bgz-referral" describes how to use the specification 'TA-Notified-Pull-on-Nuts' in the context of a medical specialist referral (commonly reffered to in Dutch as a BgZ-verwijzing).
 - *HL7 FHIR Workflow Management Communication Pattern F*: https://www.hl7.org/fhir/workflow-management.html#optionf
-  HL7 has described a FHIR workflow management communication pattern in which a Task-resource is created on the placer's system. The applucation on Nuts Notified Pull complies to this pattern and provides an implementation guide for the digital interactions between actor Placer and actor Filler.
+  HL7 has described a FHIR workflow management communication pattern in which a Task-resource is created on the placer's system. The application on Nuts Notified Pull complies to this pattern and provides an implementation guide for the digital interactions between actor Placer and actor Filler. The actor Placer corresponds to "Sending Organization". The actor Filler corrspeonds to "Receiving Organization".
 - *Application-on-Nuts Zorginzage 2022*: https://nuts-foundation.gitbook.io/bolts/zorginzage/zorginzage-2022
   This application-on-Nuts specifies how to implement cross organzational medical data requests. It describes the "pull" part of "notified pull".
 
@@ -45,14 +45,12 @@ E.g. the Nuts-use-case-profile "[bgz-referral](https://github.com/jorritspee/nut
 
 ## 1.4 Glossary
 
-- Placer: The professional that has a request. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
-- Filler: The professional that is requested to perform an action. The requester is referred to as the "placer" and the performer is referred to as the "filler", which are often seen as order-specific terms. However, in this context, the terms hold whether the request is expressed as a proposal, plan or full-blown order.
 - Nuts: A partnership of parties in healthcare to create a broadly supported, open, decentralized infrastructure for the exchange of data in healthcare and the medical domain. See www.nuts.nl.
 - Application on Nuts — A practical application of the Nuts philosophy and open technology to enable a tangible use case in healthcare (formerly called "Bolt").
-- Data holder / Sending Organization: The healthcare institution from which the patient is referred. From the perspective of the BgZ referral, the organization that has patient data that needs to be transferred.
+- Sending Organization: The healthcare institution from which the patient is referred. From the perspective of the BgZ referral, the organization that has patient data that needs to be transferred.
 - Sending System: The software system that manages the data holder's data.
 - Patient: The patient that is subject of the request
-- Data user / Receiving Organization: The healthcare institution that receives the request, and therefore has an information need for data from the data holder.
+- Receiving Organization: The healthcare institution that receives the request, and therefore has an information need for data from the data holder.
 - Receiving System — The software system that manages the recipient organization's data.
 - Legal base — A legal base for being allowed to break the professional secrecy of the data holder.
 
@@ -64,7 +62,7 @@ The generic process of exchanging workflow information is described in paragraph
 
 ## 2.2 Exchange of medical record data
 
-The filler may need medical record data stored at the filler to perform the request.
+The Receiving Organization may need medical record data stored at the filler to perform the request.
 
 # 3. Architecture
 
@@ -91,15 +89,15 @@ The applicable legal texts can change per use case but in general these are:
 - Wegiz (Electronic Data Exchange in Healthcare Act).
 The WDO is not relevant to this application as it governs patient identification. In the context of the BgZ referral, we only deal with identifying healthcare practitioners and healthcare organizations.
 
-The GDPR (Article 9(1) of the GDPR and Article 22(1) of the UAVG) stats that personal data and special (medical) personal data may not simply be processed. This concerns both the placer (data holder) and the filler (data user). The GDPR lists 6 grounds for processing:
+The GDPR (Article 9(1) of the GDPR and Article 22(1) of the UAVG) stats that personal data and special (medical) personal data may not simply be processed. This concerns both the Sending Organization and the Receiving Organization. The GDPR lists 6 grounds for processing:
 1. consent of the person concerned (patient)
 2. execution of an agreement
 3. legal obligation
 4. vital interests of the person concerned (patient)
 5. performing a public law task
 6. legitimate interest of the organization
-The placer (data holder) is subject to legal obligation, which is included in the WGBO. Things are a little less simple for the filler (data user).
-If there is agreement as to who will be the filler or Receiving Organization, and the patient has already given consent for the request from placer to filler, the WGBO applies.
+The Sending Organization is subject to legal obligation, which is included in the WGBO. Things are a little less simple for the filler (data user).
+If there is agreement as to who will be the filler or Receiving Organization, and the patient has already given consent for the request from Sending Organization to filler, the WGBO applies.
 The WGBO states that a care provider may assume a patient's consent (implicit consent) to provide his or her patient data when that care provider sends the patient to another care provider for a current care need and provides patient data for this purpose (more details can be found in the report "[Implementatie van de WGBO Deel 4](https://www.knmg.nl/download/implementatie-van-de-wgbo-deel-4-toegang-tot-patientengegevens#:~:text=wet%20naar%20praktijk.-,Implementatie%20van%20de%20WGBO.,king%20met%20het%20NICTIZ%20ontwikkeld.)", chapter chapter 2.2.5.
 
 ## 3.3 Security and trust
@@ -156,7 +154,7 @@ These specific agreements are recorded per healthcare use case in the use case p
 The correct Receiving System must be notified, so that the Receiving Organization knows that a workflow request is made to the organization. The purpose of the notification is to notify the Receiving Organization that workflow data is available. It is also necessary to be able to monitor the progress of the workflow process. Every workflow must therefore have a status: is the workflow being processed, has it been cancelled, is it ready?
 
 ### 4.1.1 Workflow Task
-The [Workflow-Task resource](https://www.hl7.org/fhir/task.html) is used to track the progress of the worfklow. The placer (data holder) is responsible for setting out the Workflow-task. If the data holder wants to send a workflow request to a Receiving Organization, a workflow task must be created for this. Because of this responsibility and because of the principle of data at the source, the Workflow task will be stored in the data holder system (Sending System). The Receiving System (data user system) is notified and can retrieve the Workflow task. For every change in the Workflow task, the data holder system will send a notification. 
+The [Workflow-Task resource](https://www.hl7.org/fhir/task.html) is used to track the progress of the worfklow. The Sending Organization (data holder) is responsible for setting out the Workflow-task. If the data holder wants to send a workflow request to a Receiving Organization, a workflow task must be created for this. Because of this responsibility and because of the principle of data at the source, the Workflow task will be stored in the data holder system (Sending System). The Receiving System (data user system) is notified and can retrieve the Workflow task. For every change in the Workflow task, the data holder system will send a notification. 
 
 TTA FHIR - Notified pull does not describe the elements of the generic workflow task. In the technical design for the nursing handover, the Workflow Task resource is specified in §3.4. For the sake of reusability, this Application to Nuts uses the latter Workflow-Task specification as a generic basis. 
 
@@ -198,7 +196,7 @@ A service must be registered for the Sending Organization:
 ```json
 {
   "id": "did:nuts:organization_identifier#xyz",
-  "type": "<<use case specific placer service name>>", 
+  "type": "<<use case specific Sending Organization service name>>", 
   "serviceEndpoint": {
     "oauth": "did:nuts:vendor_identifier/serviceEndpoint?type=production-oauth",
     "fhir": "did:nuts:vendor_identifier/serviceEndpoint?type=<<use case specific Sending Organization service name>>-fhir"
@@ -211,7 +209,7 @@ The value for 'type' is specified in the use case profile. The 'serviceEndpoint'
 ```json
 {
     "id": "did:nuts:vendor_identifier#xyz",
-    "type": "<<use case specific placer service name>>-fhir", 
+    "type": "<<use case specific Sending Organization service name>>-fhir", 
     "serviceEndpoint": "https://fhir.example.com/base"
 }
 
@@ -260,7 +258,7 @@ When a Workflow task is added, the Sending System will send a notification to th
 
 | Attribute                        | Card.           | Description                                                                                                                                         |
 |----------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| basedOn                          | 1..1            | Mandatory reference to the Workflow-Task.   Yes or No leading slash?                                                                                |
+| basedOn                          | 1..1            | Mandatory reference to the Workflow-Task.   No leading slash                                                                                |
 | groupIdentifier                  | 1..1 (unchanged)| Tip: Fill with uuid/logical id of the Workflow-Task                                                                                                 |
 | identifier                       | 1..1 (unchanged)| (unchanged)                                                                                                                                         |
 | status                           | 1..1 (unchanged)| Fixed value: "requested" (unchanged)                                                                                                                |
@@ -278,6 +276,15 @@ When a Workflow task is added, the Sending System will send a notification to th
 ## 4.2 Data exchange
 
 As described in §3.4, we separate the process tracking on the one hand from the data access authorization on the other. This means that in addition to the Workflow-task and Notfication-task that manage the process, there must also be a mechanism that controls access to data. The generic mechanism that controls access to data is described in [chapter 4](https://nuts-foundation.gitbook.io/bolts/zorginzage/zorginzage-2022#id-4.-specificaties) of the application on Nuts "Zorginzage 2022". Use case specific agreements about access control are described in the access policy section of the appropriate use case profile. When using a notified pull mechanism, different states of the Workflow-task resource can lead to different accesses rights.
+
+## 4.3 BSN availability
+This paragrah describes the availability of bsn's in the sequence that is used in this Application on Nuts. It is a summary of information that is already present in other parts of this specification and is therfore informal.
+|artefact|bsn availability|reference to authorization credential|
+---------------------------------------------------------------------
+| notification task| no bsn| authorization credential that authorizes access to workflow task: "workflow task authorization credential"|
+| workflow task authorization credential|no bsn|n/a|
+| workflow task|no bsn| authorization credential that authorizes that authorizes access to personal resources: "bgz authorization credential"|
+| bgz authorization credential| bsn | n/a|
 
 # 5 Implementation
 
