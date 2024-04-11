@@ -1,7 +1,7 @@
 # Colofon
 
 |Version|1.00|
-|-------|----|
+|:------|:---|
 |Authors|Christian Spruijt (SDB Groep), Jorrit Spee (Tenzinger, Santeon)|
 
 # 1. Introduction
