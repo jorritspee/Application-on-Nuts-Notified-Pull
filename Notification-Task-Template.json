@@ -1,0 +1,77 @@
+{
+  "resourceType": "Task",
+  "identifier": [
+    {
+      "system": "https://tools.ietf.org/html/rfc4122",
+      "value": "urn:uuid:<<UUID>>"
+    }
+  ],
+  "basedOn": [
+    {
+      "reference": "Task/<<Workflow Task ID>>"
+    }
+  ],
+  "groupIdentifier": {
+    "system": "https://tools.ietf.org/html/rfc4122",
+    "value": "urn:uuid:<<UUID>>"
+  },
+  "status": "requested",
+  "intent": "proposal",
+  "code": {
+    "coding": [
+      {
+        "system": "http://fhir.nl/fhir/NamingSystem/TaskCode",
+        "code": "pull-notification"
+      }
+    ]
+  },
+  "requester": {
+    "agent": {
+      "identifier": {
+        "system": "https://www.w3.org/ns/did/v1",
+        "value": "<<FHIR endpoint DID>>"
+      }
+    },
+    "onBehalfOf": {
+      "identifier": {
+        "system": "https://www.w3.org/ns/did/v1",
+        "value": "<<Sending organization DID>>"
+      }
+    }
+  },
+  "owner": {
+    "identifier": {
+      "system": "https://www.w3.org/ns/did/v1",
+      "value": "<<Receiving organization DID>>"
+    }
+  },
+  "restriction": {
+    "period": {
+      "end": "<<Nuts Authorization Credential expiration date>>"
+    }
+  },
+  "input": [
+    {
+      "type": {
+        "coding": [
+          {
+            "system": "http://fhir.nl/fhir/NamingSystem/TaskParameter",
+            "code": "authorization-base"
+          }
+        ]
+      },
+      "valueString": "<<Nuts Authorization Credential DID to access Workflow Task>>"
+    },
+    {
+      "type": {
+        "coding": [
+          {
+            "system": "http://fhir.nl/fhir/NamingSystem/TaskParameter",
+            "code": "get-workflow-task"
+          }
+        ]
+      },
+      "valueBoolean": true
+    }
+  ]
+}

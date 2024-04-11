@@ -1,0 +1,75 @@
+{
+  "resourceType": "Task",
+  "id": "<<UUID>>",
+  "identifier": [
+    {
+      "system": "https://tools.ietf.org/html/rfc4122",
+      "value": "urn:uuid:<<UUID>>"
+    }
+  ],
+  "groupIdentifier": {
+    "system": "https://tools.ietf.org/html/rfc4122",
+    "value": "urn:uuid:<<UUID>>"
+  },
+  "status": "requested",
+  "intent": "order",
+  "code": {
+    "coding": [
+      {
+        "system": "http://snomed.info/sct",
+        "code": "3457005",
+        "display": "Patient referral"
+      }
+    ]
+  },
+  "requester": {
+    "agent": {
+      "identifier": {
+        "system": "https://www.w3.org/ns/did/v1",
+        "value": "<<FHIR endpoint DID>>"
+      }
+    },
+    "onBehalfOf": {
+      "identifier": {
+        "system": "https://www.w3.org/ns/did/v1",
+        "value": "<<Sending organization DID>>"
+      }
+    }
+  },
+  "owner": {
+    "identifier": {
+      "system": "https://www.w3.org/ns/did/v1",
+      "value": "<<Receiving organization DID>>"
+    }
+  },
+  "restriction": {
+    "period": {
+      "end": "<<Nuts Authorization Credential expiration date>>"
+    }
+  },
+  "input": [
+    {
+      "type": {
+        "coding": [
+          {
+            "system": "http://fhir.nl/fhir/NamingSystem/TaskParameter",
+            "code": "authorization-base"
+          }
+        ]
+      },
+      "valueString": "<<Nuts Authorization Credential DID to access personal FHIR resources>>"
+    },
+    {
+      "type": {
+        "coding": [
+          {
+            "system": "<<System>>",
+            "code": "<<Code>>",
+            "display": "<<Display>>"
+          }
+        ]
+      },
+      "valueString": "<<Search URL>>"
+    }
+  ]
+}
